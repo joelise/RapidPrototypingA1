@@ -2,14 +2,29 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Events;
+using Unity.VisualScripting;
+using UnityEngine.UI;
 
 namespace StealthGame
 {
+    public enum Direction { North, East, South, West, Default };
+
     public class PlayerMovement : MonoBehaviour
     {
+        
         public InputAction MoveAction;
         public InputAction JumpAction;
-        
+
+        public InputAction NorthControl;
+        public InputAction EastControl;
+        public InputAction SouthControl;
+        public InputAction WestControl;
+        public InputAction DefaultControl;
+
+        public string[] checkTags;
+        public Direction dir;
+        public UnityEvent onTriggerEnterEvent;
 
         public float walkSpeed = 1.0f;
         public float turnSpeed = 20f;
@@ -29,15 +44,20 @@ namespace StealthGame
             m_Animator = GetComponent<Animator> ();
             m_Rigidbody = GetComponent<Rigidbody> ();
             m_AudioSource = GetComponent<AudioSource> ();
+
+            MoveAction = DefaultControl;
         
             MoveAction.Enable();
             JumpAction.Enable();
+            dir = Direction.Default;
         }
 
         private void Update()
         {
             if (JumpAction.WasPressedThisFrame())
                 print("Jump");
+
+            ChangeInputMap();
         }
 
         void FixedUpdate ()
@@ -82,6 +102,100 @@ namespace StealthGame
         public bool OwnKey(string keyName)
         {
             return m_OwnedKeys.Contains(keyName);
+        }
+
+        public void OnTriggerEnter(Collider other)
+        {
+            
+
+
+                if (other.gameObject.CompareTag("North"))
+                {
+                    Debug.Log("North");
+                    dir = Direction.North;
+                }
+
+                else if (other.gameObject.CompareTag("East"))
+                {
+                    Debug.Log("East");
+                    dir = Direction.East;
+                }
+
+                else if (other.gameObject.CompareTag("South"))
+                {
+                    Debug.Log("South");
+                    dir = Direction.South;
+                }
+
+                else if ( other.gameObject.CompareTag("West"))
+                {
+                    Debug.Log("West");
+                    dir = Direction.West;
+                }
+            
+           // else (dir = Direction.Default)
+        }
+
+        public void ChangeInputMap()
+        {
+            //NorthControl.Disable();
+            //EastControl.Disable();
+            //SouthControl.Disable();
+            //WestControl.Disable();
+
+            switch (dir)
+            {
+                case Direction.North:
+                    if (MoveAction.WasReleasedThisFrame())
+                    {
+                        NorthControl.Enable();
+                        MoveAction = NorthControl;
+                    }
+                   
+                  
+                    break;
+
+                case Direction.East:
+                   
+                    if (MoveAction.WasReleasedThisFrame())
+                    {
+                        EastControl.Enable();
+                        MoveAction = EastControl;
+                    }
+                    
+                
+                    break;
+
+                case Direction.South:
+                   
+                    if (MoveAction.WasReleasedThisFrame())
+                    {
+                        SouthControl.Enable();
+                        MoveAction = SouthControl;
+                    }
+                    
+                
+                    break;
+
+                case Direction.West:
+                    if (MoveAction.WasReleasedThisFrame())
+                    {
+                        WestControl.Enable();
+                        MoveAction = WestControl;
+                    }
+                    
+                    
+                    break;
+
+                case Direction.Default:
+                    DefaultControl.Enable();
+                    MoveAction = DefaultControl;
+                    break;
+
+                default:
+                    MoveAction = DefaultControl;
+                    break;
+            }
         }
     }
 }

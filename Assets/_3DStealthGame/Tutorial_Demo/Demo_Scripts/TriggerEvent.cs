@@ -28,4 +28,13 @@ public class TriggerEvent : MonoBehaviour
         }
        
     }
+
+    public void OnTriggerStay(Collider other)
+    {
+        for (int i = 0; i < checkTags.Length; i++)
+        {
+            if (other.gameObject.CompareTag(checkTags[i]))
+                onTriggerStayEvent?.Invoke();
+        }
+    }
 }
