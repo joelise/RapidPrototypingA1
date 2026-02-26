@@ -16,6 +16,8 @@ namespace StealthGame
         public InputAction MoveAction;
         public InputAction JumpAction;
 
+        public InputAction LookAction;
+
         public InputAction NorthControl;
         public InputAction EastControl;
         public InputAction SouthControl;
@@ -35,6 +37,11 @@ namespace StealthGame
         AudioSource m_AudioSource;
         Vector3 m_Movement;
         Quaternion m_Rotation = Quaternion.identity;
+
+        public bool IsVisible;
+        public bool Chaseable;
+
+      
     
         // DEMO
         private List<string> m_OwnedKeys = new();
@@ -45,7 +52,8 @@ namespace StealthGame
             m_Rigidbody = GetComponent<Rigidbody> ();
             m_AudioSource = GetComponent<AudioSource> ();
 
-            MoveAction = DefaultControl;
+            //MoveAction = DefaultControl;
+           // LookAction.Enable();
         
             MoveAction.Enable();
             JumpAction.Enable();
@@ -57,7 +65,9 @@ namespace StealthGame
             if (JumpAction.WasPressedThisFrame())
                 print("Jump");
 
-            ChangeInputMap();
+            //ChangeInputMap();
+
+            
         }
 
         void FixedUpdate ()
@@ -87,6 +97,7 @@ namespace StealthGame
                 m_AudioSource.Stop ();
             }
 
+           
             Vector3 desiredForward = Vector3.RotateTowards (transform.forward, m_Movement, turnSpeed * Time.deltaTime, 0f);
             m_Rotation = Quaternion.LookRotation (desiredForward);
         
@@ -106,10 +117,29 @@ namespace StealthGame
 
         public void OnTriggerEnter(Collider other)
         {
-            
+           // if (other.gameObject.CompareTag("EnemyView"))
+           // {
+           //     IsVisible = true;
+          //  }
+
+          //  else
+           // {
+            //    IsVisible = false;
+           // }
+
+           // if (other.gameObject.CompareTag("ChaseZone"))
+         //   {
+           //     Chaseable = true;
+           // }
+
+           // else
+            //{
+            //    Chaseable = false;
+                
+            //}
 
 
-                if (other.gameObject.CompareTag("North"))
+               /* if (other.gameObject.CompareTag("North"))
                 {
                     Debug.Log("North");
                     dir = Direction.North;
@@ -133,7 +163,7 @@ namespace StealthGame
                     dir = Direction.West;
                 }
             
-           // else (dir = Direction.Default)
+           // else (dir = Direction.Default)*/
         }
 
         public void ChangeInputMap()
@@ -197,5 +227,17 @@ namespace StealthGame
                     break;
             }
         }
+
+        public void EnterChaseZone()
+        {
+            Chaseable = true;
+        }
+
+        public void ExitChaseZone()
+        {
+            Chaseable = false;
+        }
+
+        
     }
 }

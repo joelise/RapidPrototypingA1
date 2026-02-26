@@ -8,6 +8,8 @@ TagManager:
   - East
   - South
   - West
+  - EnemyView
+  - ChaseZone
   layers:
   - Default
   - TransparentFX
