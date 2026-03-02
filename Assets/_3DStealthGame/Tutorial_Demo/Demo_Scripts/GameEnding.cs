@@ -26,8 +26,17 @@ namespace StealthGame
         private bool m_Demo_GameTimerIsTicking;
         private Label m_Demo_GameTimerLabel;
 
+        // Added
+        public GameObject[] levelKeys;
+        public int KeyAmount;
+        public bool HasAllKeys;
+        public PlayerMovement playerMovement;
+
         void Start()
         {
+            KeyAmount = levelKeys.Length;
+            HasAllKeys = false;
+
             m_EndScreen = uiDocument.rootVisualElement.Q<VisualElement>("EndScreen");
             m_CaughtScreen = uiDocument.rootVisualElement.Q<VisualElement>("CaughtScreen");
 
@@ -35,6 +44,8 @@ namespace StealthGame
             m_Demo_GameTimer = 0.0f;
             m_Demo_GameTimerIsTicking = true;
             Demo_UpdateTimerLabel();
+
+            
         }
     
         void OnTriggerEnter (Collider other)
@@ -60,7 +71,12 @@ namespace StealthGame
         
             if (m_IsPlayerAtExit)
             {
-                EndLevel (m_EndScreen, true, exitAudio);
+                KeyCheck();
+                if (HasAllKeys)
+                {
+                    EndLevel(m_EndScreen, true, exitAudio);
+                }
+                
             }
             else if (m_IsPlayerCaught)
             {
@@ -98,6 +114,14 @@ namespace StealthGame
         void Demo_UpdateTimerLabel()
         {
             m_Demo_GameTimerLabel.text = m_Demo_GameTimer.ToString("0.00");
+        }
+
+        public void KeyCheck()
+        {
+            if (playerMovement.m_OwnedKeys.Count == KeyAmount)
+            {
+                HasAllKeys = true;
+            }
         }
     }
 }

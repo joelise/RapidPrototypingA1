@@ -1609,6 +1609,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 563ac48ff656d49478fd93213f4c0eb8, type: 3}
+--- !u!1 &463810845 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2036892858081619888, guid: 40ee6207ce14a2546ab057bd90962187,
+    type: 3}
+  m_PrefabInstance: {fileID: 1139792784}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &480491498
 GameObject:
   m_ObjectHideFlags: 0
@@ -1831,6 +1837,12 @@ Transform:
   - {fileID: 58215704}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &589431901 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2036892858081619888, guid: 40ee6207ce14a2546ab057bd90962187,
+    type: 3}
+  m_PrefabInstance: {fileID: 4057017453604878793}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &654568892
 GameObject:
   m_ObjectHideFlags: 0
@@ -4034,7 +4046,7 @@ PrefabInstance:
     - target: {fileID: 1524064310572694625, guid: a4d59dc6cc1273e43b943863a799ef8f,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1526875612206739877, guid: a4d59dc6cc1273e43b943863a799ef8f,
         type: 3}
@@ -5439,7 +5451,7 @@ PrefabInstance:
     - target: {fileID: 1524064310572694625, guid: a4d59dc6cc1273e43b943863a799ef8f,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1526875612206739877, guid: a4d59dc6cc1273e43b943863a799ef8f,
         type: 3}
@@ -5675,6 +5687,11 @@ PrefabInstance:
       propertyPath: turnSpeed
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 142462114116109389, guid: e58a8494f35e17f45ba5bbffdfb92517,
+        type: 3}
+      propertyPath: gameEnding
+      value: 
+      objectReference: {fileID: 5642716984738007026}
     - target: {fileID: 142462114116109389, guid: e58a8494f35e17f45ba5bbffdfb92517,
         type: 3}
       propertyPath: camTransform
@@ -7400,6 +7417,11 @@ PrefabInstance:
       objectReference: {fileID: 1413067897}
     - target: {fileID: 5642716984738007026, guid: 3d8158841df6b824eb4a665f82a99938,
         type: 3}
+      propertyPath: playerMovement
+      value: 
+      objectReference: {fileID: 6077229646317852082}
+    - target: {fileID: 5642716984738007026, guid: 3d8158841df6b824eb4a665f82a99938,
+        type: 3}
       propertyPath: faderCanvasGroup
       value: 
       objectReference: {fileID: 0}
@@ -7410,9 +7432,24 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5642716984738007026, guid: 3d8158841df6b824eb4a665f82a99938,
         type: 3}
+      propertyPath: levelKeys.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5642716984738007026, guid: 3d8158841df6b824eb4a665f82a99938,
+        type: 3}
       propertyPath: caughtImageCanvasGroup
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 5642716984738007026, guid: 3d8158841df6b824eb4a665f82a99938,
+        type: 3}
+      propertyPath: 'levelKeys.Array.data[0]'
+      value: 
+      objectReference: {fileID: 589431901}
+    - target: {fileID: 5642716984738007026, guid: 3d8158841df6b824eb4a665f82a99938,
+        type: 3}
+      propertyPath: 'levelKeys.Array.data[1]'
+      value: 
+      objectReference: {fileID: 463810845}
     - target: {fileID: 5642716984738007026, guid: 3d8158841df6b824eb4a665f82a99938,
         type: 3}
       propertyPath: dynamicObservers.Array.size

@@ -41,10 +41,12 @@ namespace StealthGame
         public bool IsVisible;
         public bool Chaseable;
 
+        public GameEnding gameEnding;
+
       
     
         // DEMO
-        private List<string> m_OwnedKeys = new();
+        public List<string> m_OwnedKeys = new();
 
         void Start ()
         {
