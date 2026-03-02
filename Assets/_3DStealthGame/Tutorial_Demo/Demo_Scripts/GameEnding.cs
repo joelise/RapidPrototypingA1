@@ -38,9 +38,11 @@ namespace StealthGame
         public float CamDelay;
         public bool GameStarted;
         public GameObject PlayerCam;
+        public Transform PlayerStart;
 
         void Start()
         {
+            PlayerStart = player.transform;
             player.GetComponent<PlayerMovement>().enabled = false;
             GameStarted = false;
             KeyAmount = levelKeys.Length;
@@ -98,7 +100,7 @@ namespace StealthGame
             }
             else if (m_IsPlayerCaught)
             {
-                EndLevel (m_CaughtScreen, true, caughtAudio);
+                EndLevel(m_CaughtScreen, true, caughtAudio);
             }
         }
 

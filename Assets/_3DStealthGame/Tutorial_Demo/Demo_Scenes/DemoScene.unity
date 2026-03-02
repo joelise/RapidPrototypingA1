@@ -1868,6 +1868,12 @@ Transform:
   m_Children: []
   m_Father: {fileID: 894613339}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &527451415 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2036892858081619888, guid: 40ee6207ce14a2546ab057bd90962187,
+    type: 3}
+  m_PrefabInstance: {fileID: 1694723433}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &527451416 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6934796157746595426, guid: 40ee6207ce14a2546ab057bd90962187,
@@ -2498,8 +2504,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 805581756}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.06860655, y: -0.83746254, z: 0.108146094, w: 0.53127587}
-  m_LocalPosition: {x: 4.32, y: 1.4, z: 3.38}
+  m_LocalRotation: {x: 0.0012622278, y: 0.9761297, z: -0.21711068, w: 0.0056749764}
+  m_LocalPosition: {x: -9.43, y: 1.61, z: -4.38}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6245,7 +6251,7 @@ PrefabInstance:
     - target: {fileID: 142462114116109389, guid: e58a8494f35e17f45ba5bbffdfb92517,
         type: 3}
       propertyPath: walkSpeed
-      value: 2
+      value: 1.25
       objectReference: {fileID: 0}
     - target: {fileID: 142462114116109389, guid: e58a8494f35e17f45ba5bbffdfb92517,
         type: 3}
@@ -8048,7 +8054,7 @@ PrefabInstance:
     - target: {fileID: 5642716984738007026, guid: 3d8158841df6b824eb4a665f82a99938,
         type: 3}
       propertyPath: levelKeys.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5642716984738007026, guid: 3d8158841df6b824eb4a665f82a99938,
         type: 3}
@@ -8095,6 +8101,11 @@ PrefabInstance:
       propertyPath: 'levelKeys.Array.data[1]'
       value: 
       objectReference: {fileID: 463810845}
+    - target: {fileID: 5642716984738007026, guid: 3d8158841df6b824eb4a665f82a99938,
+        type: 3}
+      propertyPath: 'levelKeys.Array.data[2]'
+      value: 
+      objectReference: {fileID: 527451415}
     - target: {fileID: 5642716984738007026, guid: 3d8158841df6b824eb4a665f82a99938,
         type: 3}
       propertyPath: 'KeyCameras.Array.data[0]'
