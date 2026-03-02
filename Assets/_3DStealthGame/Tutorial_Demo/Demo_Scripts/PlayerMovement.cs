@@ -50,16 +50,20 @@ namespace StealthGame
 
         void Start ()
         {
-            m_Animator = GetComponent<Animator> ();
-            m_Rigidbody = GetComponent<Rigidbody> ();
-            m_AudioSource = GetComponent<AudioSource> ();
+            
+            
+                m_Animator = GetComponent<Animator>();
+                m_Rigidbody = GetComponent<Rigidbody>();
+                m_AudioSource = GetComponent<AudioSource>();
 
-            //MoveAction = DefaultControl;
-           // LookAction.Enable();
-        
-            MoveAction.Enable();
-            JumpAction.Enable();
-            dir = Direction.Default;
+                //MoveAction = DefaultControl;
+                // LookAction.Enable();
+
+                MoveAction.Enable();
+                //JumpAction.Enable();
+                dir = Direction.Default;
+            
+            
         }
 
         private void Update()
@@ -75,18 +79,18 @@ namespace StealthGame
         void FixedUpdate ()
         {
             var pos = MoveAction.ReadValue<Vector2>();
-        
+
             float horizontal = pos.x;
             float vertical = pos.y;
-        
-            m_Movement.Set(horizontal, 0f, vertical);
-            m_Movement.Normalize ();
 
-            bool hasHorizontalInput = !Mathf.Approximately (horizontal, 0f);
-            bool hasVerticalInput = !Mathf.Approximately (vertical, 0f);
+            m_Movement.Set(horizontal, 0f, vertical);
+            m_Movement.Normalize();
+
+            bool hasHorizontalInput = !Mathf.Approximately(horizontal, 0f);
+            bool hasVerticalInput = !Mathf.Approximately(vertical, 0f);
             bool isWalking = hasHorizontalInput || hasVerticalInput;
-            m_Animator.SetBool ("IsWalking", isWalking);
-        
+            m_Animator.SetBool("IsWalking", isWalking);
+
             if (isWalking)
             {
                 if (!m_AudioSource.isPlaying)
@@ -96,15 +100,15 @@ namespace StealthGame
             }
             else
             {
-                m_AudioSource.Stop ();
+                m_AudioSource.Stop();
             }
 
-           
-            Vector3 desiredForward = Vector3.RotateTowards (transform.forward, m_Movement, turnSpeed * Time.deltaTime, 0f);
-            m_Rotation = Quaternion.LookRotation (desiredForward);
-        
-            m_Rigidbody.MoveRotation (m_Rotation);
-            m_Rigidbody.MovePosition (m_Rigidbody.position + m_Movement * walkSpeed * Time.deltaTime);
+
+            Vector3 desiredForward = Vector3.RotateTowards(transform.forward, m_Movement, turnSpeed * Time.deltaTime, 0f);
+            m_Rotation = Quaternion.LookRotation(desiredForward);
+
+            m_Rigidbody.MoveRotation(m_Rotation);
+            m_Rigidbody.MovePosition(m_Rigidbody.position + m_Movement * walkSpeed * Time.deltaTime);
         }
 
         public void AddKey(string keyName)
@@ -238,6 +242,11 @@ namespace StealthGame
         public void ExitChaseZone()
         {
             Chaseable = false;
+        }
+
+        public void Movement()
+        {
+            
         }
 
         

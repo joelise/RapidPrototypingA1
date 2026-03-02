@@ -1,6 +1,8 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
+using System.Collections.Generic;
 
 namespace StealthGame
 {
@@ -31,11 +33,20 @@ namespace StealthGame
         public int KeyAmount;
         public bool HasAllKeys;
         public PlayerMovement playerMovement;
+        //public GameObject[] KeyCameras;
+        public List<GameObject> KeyCams;
+        public float CamDelay;
+        public bool GameStarted;
+        public GameObject PlayerCam;
 
         void Start()
         {
+            player.GetComponent<PlayerMovement>().enabled = false;
+            GameStarted = false;
             KeyAmount = levelKeys.Length;
             HasAllKeys = false;
+            PlayerCam.gameObject.SetActive(true);
+            StartCoroutine(CameraCycle());
 
             m_EndScreen = uiDocument.rootVisualElement.Q<VisualElement>("EndScreen");
             m_CaughtScreen = uiDocument.rootVisualElement.Q<VisualElement>("CaughtScreen");
@@ -45,7 +56,14 @@ namespace StealthGame
             m_Demo_GameTimerIsTicking = true;
             Demo_UpdateTimerLabel();
 
-            
+
+
+
+
+
+
+
+
         }
     
         void OnTriggerEnter (Collider other)
@@ -122,6 +140,33 @@ namespace StealthGame
             {
                 HasAllKeys = true;
             }
+        }
+
+        public IEnumerator CameraCycle()
+        {
+            PlayerCam.gameObject.SetActive(false);
+
+            foreach (GameObject cam in KeyCams)
+            {
+                cam.SetActive(false);
+            }
+
+            foreach (GameObject cam in KeyCams)
+            {
+                cam.SetActive(true);
+                yield return new WaitForSeconds(CamDelay);
+                cam.SetActive(false);
+            }
+
+            PlayerCam.SetActive(true);
+            GameStarted = true;
+            player.GetComponent<PlayerMovement>().enabled = true;
+
+        }
+
+        private void Awake()
+        {
+            StartCoroutine(CameraCycle());
         }
     }
 }
