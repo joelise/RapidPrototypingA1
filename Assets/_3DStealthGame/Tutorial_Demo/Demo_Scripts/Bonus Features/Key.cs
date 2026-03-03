@@ -22,7 +22,7 @@ namespace StealthGame
                 return;
         
             player.AddKey(KeyName);
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         }
 
         private void Update()
@@ -35,6 +35,11 @@ namespace StealthGame
         private void Start()
         {
             pos = transform.position;
+        }
+
+        public void Reset()
+        {
+            gameObject.SetActive(true);
         }
 
         public void AnimateUp()

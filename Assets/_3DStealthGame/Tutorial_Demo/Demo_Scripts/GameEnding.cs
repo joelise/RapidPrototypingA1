@@ -40,6 +40,9 @@ namespace StealthGame
         public GameObject PlayerCam;
         public Transform PlayerStart;
 
+        public bool SkipPressed;
+        public bool CamSeq;
+
         void Start()
         {
             PlayerStart = player.transform;
@@ -49,7 +52,7 @@ namespace StealthGame
             HasAllKeys = false;
             PlayerCam.gameObject.SetActive(true);
             StartCoroutine(CameraCycle());
-
+            
             m_EndScreen = uiDocument.rootVisualElement.Q<VisualElement>("EndScreen");
             m_CaughtScreen = uiDocument.rootVisualElement.Q<VisualElement>("CaughtScreen");
 
@@ -102,6 +105,12 @@ namespace StealthGame
             {
                 EndLevel(m_CaughtScreen, true, caughtAudio);
             }
+
+            CheckPressed();
+            if (SkipPressed)
+            {
+                
+            }
         }
 
         void EndLevel (VisualElement element, bool doRestart, AudioSource audioSource)
@@ -146,6 +155,7 @@ namespace StealthGame
 
         public IEnumerator CameraCycle()
         {
+            CamSeq = true;
             PlayerCam.gameObject.SetActive(false);
 
             foreach (GameObject cam in KeyCams)
@@ -163,12 +173,35 @@ namespace StealthGame
             PlayerCam.SetActive(true);
             GameStarted = true;
             player.GetComponent<PlayerMovement>().enabled = true;
+            CamSeq = false;
 
         }
 
         private void Awake()
         {
-            StartCoroutine(CameraCycle());
+            //StartCoroutine(CameraCycle());
+        }
+
+        public void CheckPressed()
+        {
+            if (CamSeq)
+            {
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    SkipPressed = true;
+                    
+                    foreach (GameObject cam in KeyCams)
+                    {
+                        cam.SetActive(false);
+                    }
+                    StopAllCoroutines();
+                    PlayerCam.SetActive(true);
+                    GameStarted = true;
+                    player.GetComponent<PlayerMovement>().enabled = true;
+                    CamSeq = false;
+                }
+            }
+           
         }
     }
 }

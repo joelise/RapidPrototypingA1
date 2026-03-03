@@ -42,6 +42,7 @@ namespace StealthGame
         public bool Chaseable;
 
         public GameEnding gameEnding;
+        private Vector3 startPos;
 
       
     
@@ -50,8 +51,8 @@ namespace StealthGame
 
         void Start ()
         {
-            
-            
+
+                startPos = transform.position;
                 m_Animator = GetComponent<Animator>();
                 m_Rigidbody = GetComponent<Rigidbody>();
                 m_AudioSource = GetComponent<AudioSource>();
@@ -64,6 +65,14 @@ namespace StealthGame
                 dir = Direction.Default;
             
             
+        }
+        public void Reset()
+        {
+            transform.position = startPos;
+            //foreach (Key k in m_OwnedKeys)
+            //    k.Reset();
+
+            m_OwnedKeys.Clear();
         }
 
         private void Update()
