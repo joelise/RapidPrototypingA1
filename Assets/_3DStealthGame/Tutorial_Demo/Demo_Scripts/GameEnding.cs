@@ -5,6 +5,7 @@ using UnityEngine.UIElements;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using Image = UnityEngine.UI.Image;
+using UnityEngine.Rendering;
 
 namespace StealthGame
 {
@@ -44,14 +45,25 @@ namespace StealthGame
 
         public bool SkipPressed;
         public bool CamSeq;
-        public GameObject SkipUI;
+        //public GameObject SkipUI;
         public GameObject Fade;
         public Image FadeUI;
         public bool LevelReset;
-        
+        private Label m_Skip;
+        //private Label KeyUI;
+        private Label KeyCollected;
+        private Label KeysTotal;
+        private Label Middle;
+        private Label KeysLabel;
 
         void Start()
         {
+            KeyCollected = uiDocument.rootVisualElement.Q<Label>("KeyCollected");
+            KeysTotal = uiDocument.rootVisualElement.Q<Label>("AllKeys");
+            Middle = uiDocument.rootVisualElement.Q<Label>("middle");
+            KeysLabel = uiDocument.rootVisualElement.Q<Label>("Keys");
+            m_Skip = uiDocument.rootVisualElement.Q<Label>("Skip");
+            HideKeyUI();
             Fade.SetActive(false);
             PlayerStart = player.transform;
             player.GetComponent<PlayerMovement>().enabled = false;
@@ -65,18 +77,36 @@ namespace StealthGame
             m_CaughtScreen = uiDocument.rootVisualElement.Q<VisualElement>("CaughtScreen");
 
             m_Demo_GameTimerLabel = uiDocument.rootVisualElement.Q<Label>("Demo_TimerLabel");
+            //KeyUI = uiDocument.rootVisualElement.Q<Label>("KeyNumber");
+            m_Demo_GameTimerLabel.style.opacity = 0;
             m_Demo_GameTimer = 0.0f;
             m_Demo_GameTimerIsTicking = true;
             Demo_UpdateTimerLabel();
+            UpdateKeyUI();
+           
 
 
 
 
 
-            
 
 
+        }
 
+        void HideKeyUI()
+        {
+            KeyCollected.style.opacity = 0;
+            KeysTotal.style.opacity = 0;
+            Middle.style.opacity = 0;
+            KeysLabel.style.opacity = 0;
+        }
+
+        void ShowKeyUI()
+        {
+            KeyCollected.style.opacity = 1;
+            KeysTotal.style.opacity = 1;
+            Middle.style.opacity = 1;
+            KeysLabel.style.opacity = 1;
         }
 
         private void Awake()
@@ -100,6 +130,7 @@ namespace StealthGame
 
         void Update ()
         {
+            UpdateKeyUI();
             if (m_Demo_GameTimerIsTicking)
             {
                 m_Demo_GameTimer += Time.deltaTime;
@@ -162,6 +193,12 @@ namespace StealthGame
             m_Demo_GameTimerLabel.text = m_Demo_GameTimer.ToString("0.00");
         }
 
+        void UpdateKeyUI()
+        {
+            KeyCollected.text = playerMovement.m_OwnedKeys.Count.ToString();
+            KeysTotal.text = KeyAmount.ToString();
+        }
+
         public void KeyCheck()
         {
             if (playerMovement.m_OwnedKeys.Count == KeyAmount)
@@ -173,7 +210,7 @@ namespace StealthGame
         public IEnumerator CameraCycle()
         {
             CamSeq = true;
-            SkipUI.SetActive(true);
+            //SkipUI.SetActive(true);
             PlayerCam.gameObject.SetActive(false);
 
             foreach (GameObject cam in KeyCams)
@@ -192,7 +229,9 @@ namespace StealthGame
             GameStarted = true;
             player.GetComponent<PlayerMovement>().enabled = true;
             CamSeq = false;
-            SkipUI.SetActive(false);
+            //SkipUI.SetActive(false);
+            m_Skip.style.opacity = 0f;
+            ShowKeyUI();
 
         }
 
@@ -211,11 +250,13 @@ namespace StealthGame
                         cam.SetActive(false);
                     }
                     StopAllCoroutines();
-                    SkipUI.SetActive(false);
+                    m_Skip.style.opacity = 0;
+                    //SkipUI.SetActive(false);
                     PlayerCam.SetActive(true);
                     GameStarted = true;
                     player.GetComponent<PlayerMovement>().enabled = true;
                     CamSeq = false;
+                    ShowKeyUI();
                 }
             }
            
