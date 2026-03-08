@@ -1,8 +1,10 @@
-﻿using System.Collections;
+﻿ using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 using System.Collections.Generic;
+using UnityEngine.UI;
+using Image = UnityEngine.UI.Image;
 
 namespace StealthGame
 {
@@ -42,9 +44,15 @@ namespace StealthGame
 
         public bool SkipPressed;
         public bool CamSeq;
+        public GameObject SkipUI;
+        public GameObject Fade;
+        public Image FadeUI;
+        public bool LevelReset;
+        
 
         void Start()
         {
+            Fade.SetActive(false);
             PlayerStart = player.transform;
             player.GetComponent<PlayerMovement>().enabled = false;
             GameStarted = false;
@@ -65,12 +73,18 @@ namespace StealthGame
 
 
 
-
+            
 
 
 
         }
-    
+
+        private void Awake()
+        {
+            Color fade = FadeUI.color;
+            fade.a = 0f;
+        }
+
         void OnTriggerEnter (Collider other)
         {
             if (other.gameObject == player)
@@ -103,7 +117,10 @@ namespace StealthGame
             }
             else if (m_IsPlayerCaught)
             {
-                EndLevel(m_CaughtScreen, true, caughtAudio);
+                // ResetLevel();
+                //PlayerCaught(m_CaughtScreen, caughtAudio);
+                // m_IsPlayerCaught = false;
+                StartCoroutine(FadeRoutine());
             }
 
             CheckPressed();
@@ -156,6 +173,7 @@ namespace StealthGame
         public IEnumerator CameraCycle()
         {
             CamSeq = true;
+            SkipUI.SetActive(true);
             PlayerCam.gameObject.SetActive(false);
 
             foreach (GameObject cam in KeyCams)
@@ -174,13 +192,11 @@ namespace StealthGame
             GameStarted = true;
             player.GetComponent<PlayerMovement>().enabled = true;
             CamSeq = false;
+            SkipUI.SetActive(false);
 
         }
 
-        private void Awake()
-        {
-            //StartCoroutine(CameraCycle());
-        }
+       
 
         public void CheckPressed()
         {
@@ -195,6 +211,7 @@ namespace StealthGame
                         cam.SetActive(false);
                     }
                     StopAllCoroutines();
+                    SkipUI.SetActive(false);
                     PlayerCam.SetActive(true);
                     GameStarted = true;
                     player.GetComponent<PlayerMovement>().enabled = true;
@@ -203,5 +220,92 @@ namespace StealthGame
             }
            
         }
+
+        public void ResetLevel()
+        {
+            foreach (GameObject k in levelKeys)
+            {
+                k.SetActive(true);
+            }
+
+            playerMovement.ResetPlayer();
+            LevelReset = true;
+        }
+
+        public void PlayerCaught(VisualElement element, AudioSource audioSource)
+        {
+            Color fade = FadeUI.color;
+            fade.a = 0f;
+            Fade.SetActive(true);
+            float fadeTimer = 0f;
+            float fadeTime = 2f;
+            if (!m_HasAudioPlayed)
+            {
+                audioSource.Play();
+                m_HasAudioPlayed = true;
+            }
+
+            m_Timer += Time.deltaTime;
+            element.style.opacity = m_Timer / fadeDuration;
+
+            if (m_Timer > fadeDuration + displayImageDuration)
+            {
+                //m_Timer = 0;
+                fadeTimer += Time.deltaTime;
+                fade.a = Mathf.Lerp(0, 1, fadeTimer / fadeTime);
+                element.style.opacity = 0f;
+
+                
+
+            }
+
+            if (LevelReset)
+            {
+                element.style.opacity = 0f;
+                fadeTimer = 0f;
+                fadeTimer += Time.deltaTime;
+                fade.a = Mathf.Lerp(1, 0, fadeTimer / fadeTime);
+                LevelReset = false;
+
+            }
+        }
+
+        public IEnumerator FadeRoutine()
+        {
+            Color c = FadeUI.color;
+            c.a = 0f;
+            Fade.SetActive(true);
+            float t = 0f;
+            float fadeT = 2f;
+            float delay = 2f;
+
+            m_Timer += Time.deltaTime;
+            m_CaughtScreen.style.opacity = m_Timer / fadeDuration;
+
+            while (t < fadeT)
+            {
+                t += Time.deltaTime;
+                c.a = Mathf.Lerp(0, 1, t / fadeT);
+                FadeUI.color = c;
+                yield return null;
+                
+
+            }
+
+            m_CaughtScreen.style.opacity = 0;
+            t = 0f;
+
+            ResetLevel();
+            m_IsPlayerCaught = false;
+            while (t < fadeT)
+            {
+                t += Time.deltaTime;
+                c.a = Mathf.Lerp(1, 0, t / fadeT);
+                FadeUI.color = c;
+               
+                yield return null;
+            }
+        }
+
     }
 }

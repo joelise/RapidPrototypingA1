@@ -66,7 +66,7 @@ namespace StealthGame
             
             
         }
-        public void Reset()
+        public void ResetPlayer()
         {
             transform.position = startPos;
             //foreach (Key k in m_OwnedKeys)
