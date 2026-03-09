@@ -42,7 +42,6 @@ namespace StealthGame
         public bool GameStarted;
         public GameObject PlayerCam;
         public Transform PlayerStart;
-        public GameObject PlayerMesh;
 
         public bool SkipPressed;
         public bool CamSeq;
@@ -149,10 +148,11 @@ namespace StealthGame
             }
             else if (m_IsPlayerCaught)
             {
+                StartCoroutine(FadeRoutine());
                 // ResetLevel();
                 //PlayerCaught(m_CaughtScreen, caughtAudio);
                 // m_IsPlayerCaught = false;
-                StartCoroutine(FadeRoutine());
+
             }
 
             CheckPressed();
@@ -210,7 +210,6 @@ namespace StealthGame
 
         public IEnumerator CameraCycle()
         {
-            PlayerMesh.SetActive(true);
             CamSeq = true;
             //SkipUI.SetActive(true);
             PlayerCam.gameObject.SetActive(false);
@@ -234,7 +233,6 @@ namespace StealthGame
             //SkipUI.SetActive(false);
             m_Skip.style.opacity = 0f;
             ShowKeyUI();
-            PlayerMesh.SetActive(false);
 
         }
 
@@ -260,7 +258,6 @@ namespace StealthGame
                     player.GetComponent<PlayerMovement>().enabled = true;
                     CamSeq = false;
                     ShowKeyUI();
-                    PlayerMesh.SetActive(false);
                 }
             }
            
