@@ -13,7 +13,7 @@ namespace StealthGame
     public class PlayerMovement : MonoBehaviour
     {
         
-        //public InputAction MoveAction;
+        public InputAction MoveAction;
         public InputAction JumpAction;
 
         public InputAction LookAction;
@@ -44,14 +44,14 @@ namespace StealthGame
         public GameEnding gameEnding;
         private Vector3 startPos;
 
-        [Header("New Movement")]
+        /*[Header("New Movement")]
         public float moveSpeed;
         public InputAction MoveAction;
         public Transform cameraTarget;
         private Rigidbody rb;
-        private Vector2 moveInput;
+        private Vector2 moveInput;*/
 
-        public GameObject playerMesh;
+        //public GameObject playerMesh;
       
     
         // DEMO
@@ -59,17 +59,17 @@ namespace StealthGame
 
         private void Awake()
         {
-            rb = GetComponent<Rigidbody>();
+            //rb = GetComponent<Rigidbody>();
         }
 
         private void OnEnable()
         {
-            MoveAction.Enable();
+            //MoveAction.Enable();
         }
 
         private void OnDisable()
         {
-            MoveAction.Disable();
+            //MoveAction.Disable();
         }
 
         void Start ()
@@ -83,7 +83,7 @@ namespace StealthGame
                 //MoveAction = DefaultControl;
                 // LookAction.Enable();
 
-                //MoveAction.Enable();
+                MoveAction.Enable();
                 //JumpAction.Enable();
                 dir = Direction.Default;
             
@@ -105,14 +105,14 @@ namespace StealthGame
 
             //ChangeInputMap();
 
-            moveInput = MoveAction.ReadValue<Vector2>();
+            //moveInput = MoveAction.ReadValue<Vector2>();
 
             //Debug.Log("Move Input: " + moveInput);
         }
 
         void FixedUpdate ()
         {
-            /*var pos = MoveAction.ReadValue<Vector2>();
+            var pos = MoveAction.ReadValue<Vector2>();
 
             float horizontal = pos.x;
             float vertical = pos.y;
@@ -142,17 +142,17 @@ namespace StealthGame
             m_Rotation = Quaternion.LookRotation(desiredForward);
 
             m_Rigidbody.MoveRotation(m_Rotation);
-            m_Rigidbody.MovePosition(m_Rigidbody.position + m_Movement * walkSpeed * Time.deltaTime);*/
+            m_Rigidbody.MovePosition(m_Rigidbody.position + m_Movement * walkSpeed * Time.deltaTime);
 
 
-            Vector3 forward = cameraTarget.forward;
+            /*Vector3 forward = cameraTarget.forward;
             Vector3 right = cameraTarget.right;
 
             forward.y = 0;
             right.y = 0;
 
             Vector3 move = forward * moveInput.y + right * moveInput.x;
-            rb.MovePosition(rb.position + move * moveSpeed * Time.fixedDeltaTime);
+            rb.MovePosition(rb.position + move * moveSpeed * Time.fixedDeltaTime);*/
         }
 
         public void AddKey(string keyName)

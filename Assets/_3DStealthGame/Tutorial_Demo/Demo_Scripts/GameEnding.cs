@@ -210,7 +210,7 @@ namespace StealthGame
 
         public IEnumerator CameraCycle()
         {
-            PlayerMesh.SetActive(true);
+            //PlayerMesh.SetActive(true);
             CamSeq = true;
             //SkipUI.SetActive(true);
             PlayerCam.gameObject.SetActive(false);
@@ -234,7 +234,7 @@ namespace StealthGame
             //SkipUI.SetActive(false);
             m_Skip.style.opacity = 0f;
             ShowKeyUI();
-            PlayerMesh.SetActive(false);
+            //PlayerMesh.SetActive(false);
 
         }
 
@@ -260,7 +260,7 @@ namespace StealthGame
                     player.GetComponent<PlayerMovement>().enabled = true;
                     CamSeq = false;
                     ShowKeyUI();
-                    PlayerMesh.SetActive(false);
+                    //PlayerMesh.SetActive(false);
                 }
             }
            
@@ -322,7 +322,7 @@ namespace StealthGame
             Fade.SetActive(true);
             float t = 0f;
             float fadeT = 2f;
-            float delay = 2f;
+            //float delay = 2f;
 
             m_Timer += Time.deltaTime;
             m_CaughtScreen.style.opacity = m_Timer / fadeDuration;
